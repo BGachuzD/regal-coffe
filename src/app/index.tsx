@@ -1,13 +1,34 @@
+import {DrinkCard} from "@/components/cards/DrinkCard";
 import {StatusBar} from "expo-status-bar";
-import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+
+const featuredDrink = {
+  name: "Vanilla Cold Brew",
+  category: "Signature",
+  price: 89,
+  badge: "Nuevo",
+  imageUrl:
+    "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=900&auto=format&fit=crop",
+};
 
 export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
 
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Text style={styles.brandEyebrow}>PREMIUM COFFEE EXPERIENCE</Text>
           <Text style={styles.title}>Regal Café</Text>
@@ -28,12 +49,33 @@ export default function WelcomeScreen() {
           />
 
           <View style={styles.heroTextBox}>
-            <Text style={styles.heroLabel}>Signature pick</Text>
+            <Text style={styles.heroLabel}>El favorito de la casa</Text>
             <Text style={styles.heroTitle}>Vanilla Cold Brew</Text>
             <Text style={styles.heroDescription}>
               Café frío, notas suaves de vainilla y acabado cremoso.
             </Text>
           </View>
+        </View>
+
+        <View style={styles.featuredSection}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Bebida destacada</Text>
+            <Text style={styles.sectionLink}>Ver menú</Text>
+          </View>
+
+          <DrinkCard
+            name={featuredDrink.name}
+            category={featuredDrink.category}
+            price={featuredDrink.price}
+            badge={featuredDrink.badge}
+            imageUrl={featuredDrink.imageUrl}
+            onPress={() => {
+              console.log("Open drink detail");
+            }}
+            onToggleFavorite={() => {
+              console.log("Toggle favorite");
+            }}
+          />
         </View>
 
         <View style={styles.footer}>
@@ -50,7 +92,7 @@ export default function WelcomeScreen() {
             Diseñada para explorar café, reservas y experiencias premium.
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -60,12 +102,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2A1810",
   },
-  container: {
+  scroll: {
     flex: 1,
+  },
+  scrollContent: {
     paddingHorizontal: 24,
     paddingTop: 24,
-    paddingBottom: 20,
-    justifyContent: "space-between",
+    paddingBottom: 32,
+    gap: 28,
   },
   header: {
     gap: 12,
@@ -135,6 +179,24 @@ const styles = StyleSheet.create({
     color: "#D9C7B4",
     fontSize: 15,
     lineHeight: 22,
+  },
+  featuredSection: {
+    gap: 14,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  sectionTitle: {
+    color: "#F5EBDD",
+    fontSize: 20,
+    fontWeight: "800",
+  },
+  sectionLink: {
+    color: "#D6A85C",
+    fontSize: 14,
+    fontWeight: "700",
   },
   footer: {
     gap: 16,
